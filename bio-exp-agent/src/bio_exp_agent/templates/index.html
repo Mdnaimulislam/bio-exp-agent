@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bio Experiment Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="bg"></div>
+    <main class="shell">
+      <header class="hero">
+        <div class="kicker">Local Lab Assistant</div>
+        <h1>Bio Experiment Agent</h1>
+        <p>Upload papers, add your design rules, and generate a protocol-aware experiment plan.</p>
+      </header>
+
+      <section class="card">
+        <form method="post" enctype="multipart/form-data">
+          <div class="grid">
+            <div class="panel">
+              <label class="label">Experimental papers (PDF)</label>
+              <input class="file" type="file" name="pdfs" accept=".pdf" multiple />
+              <div class="hint">Upload new papers or reuse existing files.</div>
+
+              <label class="label">Design rules</label>
+              <textarea class="rules" name="rules" placeholder="Example: Cell line HeLa. Use CRISPR KO. Budget < $5k. Avoid animal models."></textarea>
+              <div class="hint">Protocols are preserved; summaries are generated for non-protocol sections.</div>
+
+              <button class="btn" type="submit">Generate design</button>
+              {% if message %}
+                <div class="message">{{ message }}</div>
+              {% endif %}
+              {% if uploaded and not design %}
+                <div class="message">Uploaded: {{ uploaded|join(', ') }}</div>
+              {% endif %}
+            </div>
+
+            <div class="panel output">
+              <div class="label">Generated design</div>
+              {% if design %}
+                <pre class="result">{{ design }}</pre>
+              {% else %}
+                <div class="empty">No output yet. Upload PDFs and add rules to generate a design.</div>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <footer class="footer">
+        Uses local models for summaries and design generation. OCR runs only when PDFs have little text.
+      </footer>
+    </main>
+  </body>
+</html>

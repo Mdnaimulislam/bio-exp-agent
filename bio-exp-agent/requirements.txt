@@ -1,0 +1,12 @@
+flask
+gunicorn
+pymupdf
+sentence-transformers
+transformers
+torch
+scikit-learn
+numpy
+tqdm
+pydantic
+paddleocr
+pillow

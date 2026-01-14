@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: bio-exp-agent
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn -w 1 -b 0.0.0.0:$PORT bio_exp_agent.web_app:app"

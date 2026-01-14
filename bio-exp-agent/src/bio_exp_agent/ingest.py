@@ -8,7 +8,7 @@ import fitz  # pymupdf
 from PIL import Image
 from tqdm import tqdm
 
-from .config import CONF
+from .config import CONFIG
 from .summarize import summarize_sections
 from .utils import clean_text, split_sections, mark_protocol_sections, chunk_text
 

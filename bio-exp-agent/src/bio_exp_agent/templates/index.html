@@ -23,6 +23,16 @@
               <input class="file" type="file" name="pdfs" accept=".pdf" multiple />
               <div class="hint">Upload new papers or reuse existing files.</div>
 
+              <label class="label">Model selection</label>
+              <select class="select" name="model_key">
+                {% for key, spec in model_choices.items() %}
+                  <option value="{{ key }}" {% if key == default_model %}selected{% endif %}>
+                    {{ spec.label }}
+                  </option>
+                {% endfor %}
+              </select>
+              <div class="hint">Llama models may require Hugging Face access approval.</div>
+
               <label class="label">Design rules</label>
               <textarea class="rules" name="rules" placeholder="Example: Cell line HeLa. Use CRISPR KO. Budget < $5k. Avoid animal models."></textarea>
               <div class="hint">Protocols are preserved; summaries are generated for non-protocol sections.</div>

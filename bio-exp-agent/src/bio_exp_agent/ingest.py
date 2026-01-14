@@ -50,12 +50,12 @@ def extract_text_from_pdf(pdf_path: Path) -> str:
     return clean_text("\n\n".join(pages_text))
 
 
-def build_paper_record(pdf_path: Path) -> Dict:
+def build_paper_record(pdf_path: Path, model_key: str | None = None) -> Dict:
     text = extract_text_from_pdf(pdf_path)
     sections = mark_protocol_sections(split_sections(text))
     protocol_blocks = [s for s in sections if s["is_protocol"]]
     non_protocol_blocks = [s for s in sections if not s["is_protocol"]]
-    summary = summarize_sections(non_protocol_blocks)
+    summary = summarize_sections(non_protocol_blocks, model_key=model_key)
 
     return {
         "paper_id": pdf_path.stem,
@@ -103,14 +103,14 @@ def build_index(paper_records: List[Dict], out_path: Path) -> Path:
     return out_path
 
 
-def ingest_pdfs(input_dir: Path, out_dir: Path) -> Path:
+def ingest_pdfs(input_dir: Path, out_dir: Path, model_key: str | None = None) -> Path:
     pdfs = sorted(input_dir.glob("*.pdf"))
     if not pdfs:
         raise FileNotFoundError(f"No PDFs found in {input_dir}")
 
     records = []
     for pdf in tqdm(pdfs, desc="Ingesting PDFs"):
-        record = build_paper_record(pdf)
+        record = build_paper_record(pdf, model_key=model_key)
         write_paper_json(record, out_dir)
         records.append(record)
 

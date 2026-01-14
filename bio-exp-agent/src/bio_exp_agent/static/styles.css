@@ -106,6 +106,15 @@ h1 {
   font-size: 14px;
 }
 
+.select {
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(15, 28, 20, 0.15);
+  background: #fff;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
 .btn {
   background: var(--accent);
   color: #fff;
